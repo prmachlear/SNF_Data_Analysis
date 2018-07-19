@@ -1,0 +1,344 @@
+Col Num,Col Name,Col Description,Type (num (1) vs cat (0),"Use As (input(0), output(1), ignore(-1)","Pertains to (person(0), Facility(1), Diagnosis(2), Procedure(3), Payment(4)",Comments
+1,NCH_CLAIM_TYPE_CODE,NCH Claim Type Code,0,0,0,
+2,AGE,Beneficiary Age Count,0,0,0,Convert to numerical
+3,SEX,Beneficiary Sex Code,0,0,0,
+4,RACE,Beneficiary Race Code,0,0,0,
+5,MEDICARE_STATUS_CODE,Beneficiary Medicare Status Code,0,-1,0,? Look into this later
+6,STATE,Beneficiary Residence SSA Standard State Code,0,0,0,
+7,DAY_OF_ADMISSION,Admission Day Code,0,-1,0,?Does not look like it will matter. Look into this later
+8,DISCHARGE_STATUS,Beneficiary Discharge Status Code,0,-1,0,? Could be a regressor by itself
+9,HMO_PAID_INDICATOR,GHO Paid Code,0,0,0,
+10,PPS_INDICATOR,PPS Indicator Code,0,0,1,Prospective payment system 
+11,NATIONAL_PROVIDER_ID,Organization NPI Number,0,-1,1,"? Ignore for now, but may contain lots of info"
+12,MEDPAR_PROVIDER_NUMBER,Provider Number,0,-1,1,"? Ignore for now, but may contain lots of info"
+13,SPECIAL_UNIT_CHARACTER_CODE,Provider Number Special Unit Code,0,0,1,
+14,STAY_INDICATOR,Short Stay/Long Stay/SNF Indicator Code,0,-1,1,ignore as all values are for SNF
+15,NUMBER_OF_BILLS,Stay Final Action Claims Count,1,-1,4,"ignore as it is difficult to predict, could be an input though"
+16,ADMISSION_DATE,Admission Date,0,-1,0,has only6 values
+17,DISCHARGE_DATE,Discharge Date,0,-1,0,has only6 values
+18,LENGTH_OF_STAY,Length of Stay Day Count,1,1,0,May be useful to predict this along with diagnosis and procedures
+19,OUTLIER_DAYS,Outlier Day Count,1,-1,4,"Ignore, only one value"
+20,COVERED_DAYS,Utilization Day Count,1,-1,4,can give us an idea of how many days of inurance this person had
+21,COINSURANCE_DAYS,Beneficiary Total Coinsurance Day Count,1,-1,4,come back later
+22,LIFETIME_RESERVE_DAYS,Beneficiary LRD Used Count,1,-1,0,"ignone, only one value"
+23,COINSURANCE_AMOUNT,Beneficiary Part A Coinsurance Liability,1,-1,4,relook
+24,INPATIENT_DEDUCTIBLE,Beneficiary Inpatient Deductible Liabili,1,-1,4,"ignore, only one value"
+25,BLOOD_DEDUCTIBLE,Beneficiary Blood Deductible Liability A,1,-1,4,"? Very few values, could be interesting"
+26,PRIMARY_PAYER_AMOUNT,Beneficiary Primary Payer Amount,1,-1,4,?
+27,OUTLIER_AMOUNT,DRG Outlier Approved Payment Amount,1,-1,4,all zero
+28,DISPROPORTIONATE_SHARE_AMT,Inpatient Disproportionate Share Amount,1,-1,4,all zero
+29,INDIRECT_MED_EDUCATION_AMT,Indirect Medical Education (IME) Amount,1,-1,4,all zero
+30,DRG_PRICE,DRG Price Amount,1,1,4, nice thing to regress for
+31,BILL_TOTAL_PER_DIEM,Total Pass Through Amount,1,-1,4,all zero
+32,PPS_CAPITAL_TOTAL_AMOUNT,Total PPS Capital Amount,1,-1,4,all zero
+33,IP_LOW_VOLUME_AMOUNT,Inpatient Low Volume Payment Amount,1,-1,1,check if the value is constant for each facility
+34,TOTAL_CHARGES,Total Charge Amount,1,-1,4,?revist
+35,COVERED_CHARGES,Total Covered Charge Amount,1,-1,4,?revisit
+36,REIMBURSEMENT_AMOUNT,Medicare Payment Amount,1,-1,4,?revisit
+37,TOTAL_ACCOMMODATIONS_CHARGES,All Accommodations Total Charge Amount,1,-1,4,Worth trying
+38,TOTAL_DEPARTMENTAL_CHARGES,Departmental Total Charge Amount,1,-1,4,Lets try to predict
+39,ACCOMMODATION_DAYS_1,Private Room Day Count,1,0,0,It is patients choice to stay general or private
+40,ACCOMMODATION_DAYS_2,Semiprivate Room Day Count,1,0,0,It is patients choice to stay general or private
+41,ACCOMMODATION_DAYS_3,Ward Day Count,1,0,0,It is patients choice to stay general or private
+42,ACCOMMODATION_DAYS_4,Intensive Care Day Count,1,-1,4,"Depends on ailment, worth trying"
+43,ACCOMMODATION_DAYS_5,Coronary Care Day Count,1,-1,4,"Depends on ailment, worth trying"
+44,ACCOMMODATION_CHARGES_1,Private Room Charge Amount,1,-1,4,
+45,ACCOMMODATION_CHARGES_2,Semi-Private Room Charge Amount,1,-1,4,
+46,ACCOMMODATION_CHARGES_3,Ward Charge Amount,1,-1,4,
+47,ACCOMMODATION_CHARGES_4,Intensive Care Charge Amount,1,-1,,
+48,ACCOMMODATION_CHARGES_5,Coronary Care Charge Amount,1,-1,,
+49,SERVICE_CHARGES_1,Other Service Charge Amount,1,-1,,
+50,SERVICE_CHARGES_2,Pharmacy Charge Amount,1,-1,,
+51,SERVICE_CHARGES_3,Medical/Surgical Supply Charge Amount,1,-1,,
+52,SERVICE_CHARGES_4,DME Charge Amount,1,-1,,
+53,SERVICE_CHARGES_5,Used DME Charge Amount,1,-1,,
+54,SERVICE_CHARGES_6,Physical Therapy Charge Amount,1,-1,,
+55,SERVICE_CHARGES_7,Occupational Therapy Charge Amount,1,-1,,
+56,SERVICE_CHARGES_8,Speech Pathology Charge Amount,1,-1,,
+57,SERVICE_CHARGES_9,Inhalation Therapy Charge Amount,1,-1,,
+58,SERVICE_CHARGES_10,Blood Charge Amount,1,-1,,
+59,SERVICE_CHARGES_11,Blood Administration Charge Amount,1,-1,,
+60,SERVICE_CHARGES_12,Operating Room Charge Amount,1,-1,,
+61,SERVICE_CHARGES_13,Lithotripsy Charge Amount,1,-1,,
+62,SERVICE_CHARGES_14,Cardiology Charge Amount,1,-1,,
+63,SERVICE_CHARGES_15,Anesthesia Charge Amount,1,-1,,
+64,SERVICE_CHARGES_16,Laboratory Charge Amount,1,-1,,
+65,SERVICE_CHARGES_17,Radiology Charge Amount,1,-1,,
+66,SERVICE_CHARGES_18,MRI Charge Amount,1,-1,,
+67,SERVICE_CHARGES_19,Outpatient Service Charge Amount,1,-1,,
+68,SERVICE_CHARGES_20,Emergency Room Charge Amount,1,-1,,
+69,SERVICE_CHARGES_21,Ambulance Charge Amount,1,-1,,
+70,SERVICE_CHARGES_22,Professional Fees Charge Amount,1,-1,,
+71,SERVICE_CHARGES_23,Organ Acquisition Charge Amount,1,-1,,
+72,SERVICE_CHARGES_24,ESRD Revenue Setting Charge Amount,1,-1,,
+73,SERVICE_CHARGES_25,Clinic Visit Charge Amount,1,-1,,
+74,INTENSIVE_CARE_INDICATOR,Intensive Care Unit (ICU) Indicator Code,0,0,,
+75,CORONARY_CARE_INDICATOR,Coronary Care Indicator Code,0,0,,
+76,PHARMACY_INDICATOR,Pharmacy Indicator Code,0,0,,
+77,TRANSPLANT_INDICATOR,Transplant Indicator Code,0,0,,
+78,RADIOLOGY_INDICATOR_1,Radiology Oncology Indicator Switch,0,0,,
+79,RADIOLOGY_INDICATOR_2,Radiology Diagnostic Indicator Switch,0,0,,
+80,RADIOLOGY_INDICATOR_3,Radiology Therapeutic Indicator Switch,0,0,,
+81,RADIOLOGY_INDICATOR_4,Radiology Nuclear Medicine Indicator Swi,0,0,,
+82,RADIOLOGY_INDICATOR_5,Radiology CT Scan Indicator Switch,0,0,,
+83,RADIOLOGY_INDICATOR_6,Radiology Other Imaging Indicator Switch,0,0,,
+84,OUTPATIENT_SERVICES_INDICATOR,Outpatient Services Indicator Code,0,0,,
+85,ORGAN_INDICATOR,Organ Acquisition Indicator Code,0,0,,
+86,ESRD_SETTING_INDICATOR_1,ESRD Setting Indicator Code,0,-1,,
+87,ESRD_SETTING_INDICATOR_2,ESRD Setting Indicator Code 2,0,-1,,
+88,ESRD_SETTING_INDICATOR_3,ESRD Setting Indicator Code 3,0,-1,,
+89,ESRD_SETTING_INDICATOR_4,ESRD Setting Indicator Code 4,0,-1,,
+90,ESRD_SETTING_INDICATOR_5,ESRD Setting Indicator Code 5,0,-1,,
+91,POA_DIAGNOSIS_CODE_COUNT,Claim Present on Admission Diagnosis Cod,0,0,,
+92,POA_DIAGNOSIS_INDICATOR_1,Claim Present on Admission Diagnosis Ind,0,0,,
+93,POA_DIAGNOSIS_INDICATOR_2,Claim Present on Admission Diagnosis Ind,0,0,,
+94,POA_DIAGNOSIS_INDICATOR_3,Claim Present on Admission Diagnosis Ind,0,0,,
+95,POA_DIAGNOSIS_INDICATOR_4,Claim Present on Admission Diagnosis Ind,0,0,,
+96,POA_DIAGNOSIS_INDICATOR_5,Claim Present on Admission Diagnosis Ind,0,0,,
+97,POA_DIAGNOSIS_INDICATOR_6,Claim Present on Admission Diagnosis Ind,0,0,,
+98,POA_DIAGNOSIS_INDICATOR_7,Claim Present on Admission Diagnosis Ind,0,0,,
+99,POA_DIAGNOSIS_INDICATOR_8,Claim Present on Admission Diagnosis Ind,0,0,,
+100,POA_DIAGNOSIS_INDICATOR_9,Claim Present on Admission Diagnosis Ind,0,0,,
+101,POA_DIAGNOSIS_INDICATOR_10,Claim Present on Admission Diagnosis Ind,0,0,,
+102,POA_DIAGNOSIS_INDICATOR_11,Claim Present on Admission Diagnosis Ind,0,0,,
+103,POA_DIAGNOSIS_INDICATOR_12,Claim Present on Admission Diagnosis Ind,0,0,,
+104,POA_DIAGNOSIS_INDICATOR_13,Claim Present on Admission Diagnosis Ind,0,0,,
+105,POA_DIAGNOSIS_INDICATOR_14,Claim Present on Admission Diagnosis Ind,0,0,,
+106,POA_DIAGNOSIS_INDICATOR_15,Claim Present on Admission Diagnosis Ind,0,0,,
+107,POA_DIAGNOSIS_INDICATOR_16,Claim Present on Admission Diagnosis Ind,0,0,,
+108,POA_DIAGNOSIS_INDICATOR_17,Claim Present on Admission Diagnosis Ind,0,0,,
+109,POA_DIAGNOSIS_INDICATOR_18,Claim Present on Admission Diagnosis Ind,0,0,,
+110,POA_DIAGNOSIS_INDICATOR_19,Claim Present on Admission Diagnosis Ind,0,0,,
+111,POA_DIAGNOSIS_INDICATOR_20,Claim Present on Admission Diagnosis Ind,0,0,,
+112,POA_DIAGNOSIS_INDICATOR_21,Claim Present on Admission Diagnosis Ind,0,0,,
+113,POA_DIAGNOSIS_INDICATOR_22,Claim Present on Admission Diagnosis Ind,0,0,,
+114,POA_DIAGNOSIS_INDICATOR_23,Claim Present on Admission Diagnosis Ind,0,0,,
+115,POA_DIAGNOSIS_INDICATOR_24,Claim Present on Admission Diagnosis Ind,0,0,,
+116,POA_DIAGNOSIS_INDICATOR_25,Claim Present on Admission Diagnosis Ind,0,0,,
+117,POA_DIAGNOSIS_E_CODE_COUNT,Claim Present on Admission Diagnosis E C,0,0,,
+118,POA_DIAGNOSIS_E_INDICATOR_1,Claim Present on Admission Diagnosis E I,0,0,,
+119,POA_DIAGNOSIS_E_INDICATOR_2,Claim Present on Admission Diagnosis E I,0,0,,
+120,POA_DIAGNOSIS_E_INDICATOR_3,Claim Present on Admission Diagnosis E I,0,0,,
+121,POA_DIAGNOSIS_E_INDICATOR_4,Claim Present on Admission Diagnosis E I,0,0,,
+122,POA_DIAGNOSIS_E_INDICATOR_5,Claim Present on Admission Diagnosis E I,0,0,,
+123,POA_DIAGNOSIS_E_INDICATOR_6,Claim Present on Admission Diagnosis E I,0,0,,
+124,POA_DIAGNOSIS_E_INDICATOR_7,Claim Present on Admission Diagnosis E I,0,0,,
+125,POA_DIAGNOSIS_E_INDICATOR_8,Claim Present on Admission Diagnosis E I,0,0,,
+126,POA_DIAGNOSIS_E_INDICATOR_9,Claim Present on Admission Diagnosis E I,0,0,,
+127,POA_DIAGNOSIS_E_INDICATOR_10,Claim Present on Admission Diagnosis E I,0,0,,
+128,POA_DIAGNOSIS_E_INDICATOR_11,Claim Present on Admission Diagnosis E I,0,0,,
+129,POA_DIAGNOSIS_E_INDICATOR_12,Claim Present on Admission Diagnosis E I,0,0,,
+130,DIAGNOSIS_CODE_COUNT,Diagnosis Code Count,1,-1,,
+131,DIAGNOSIS_VERSION_CODE_1,Diagnosis Version Code,0,-1,,prefilter only icd9
+132,DIAGNOSIS_VERSION_CODE_2,Diagnosis Version Code 2,0,-1,,prefilter only icd10
+133,DIAGNOSIS_VERSION_CODE_3,Diagnosis Version Code 3,0,-1,,prefilter only icd11
+134,DIAGNOSIS_VERSION_CODE_4,Diagnosis Version Code 4,0,-1,,prefilter only icd12
+135,DIAGNOSIS_VERSION_CODE_5,Diagnosis Version Code 5,0,-1,,prefilter only icd13
+136,DIAGNOSIS_VERSION_CODE_6,Diagnosis Version Code 6,0,-1,,prefilter only icd14
+137,DIAGNOSIS_VERSION_CODE_7,Diagnosis Version Code 7,0,-1,,prefilter only icd15
+138,DIAGNOSIS_VERSION_CODE_8,Diagnosis Version Code 8,0,-1,,prefilter only icd16
+139,DIAGNOSIS_VERSION_CODE_9,Diagnosis Version Code 9,0,-1,,prefilter only icd17
+140,DIAGNOSIS_VERSION_CODE_10,Diagnosis Version Code 10,0,-1,,prefilter only icd18
+141,DIAGNOSIS_VERSION_CODE_11,Diagnosis Version Code 11,0,-1,,prefilter only icd19
+142,DIAGNOSIS_VERSION_CODE_12,Diagnosis Version Code 12,0,-1,,prefilter only icd20
+143,DIAGNOSIS_VERSION_CODE_13,Diagnosis Version Code 13,0,-1,,prefilter only icd21
+144,DIAGNOSIS_VERSION_CODE_14,Diagnosis Version Code 14,0,-1,,prefilter only icd22
+145,DIAGNOSIS_VERSION_CODE_15,Diagnosis Version Code 15,0,-1,,prefilter only icd23
+146,DIAGNOSIS_VERSION_CODE_16,Diagnosis Version Code 16,0,-1,,prefilter only icd24
+147,DIAGNOSIS_VERSION_CODE_17,Diagnosis Version Code 17,0,-1,,prefilter only icd25
+148,DIAGNOSIS_VERSION_CODE_18,Diagnosis Version Code 18,0,-1,,prefilter only icd26
+149,DIAGNOSIS_VERSION_CODE_19,Diagnosis Version Code 19,0,-1,,prefilter only icd27
+150,DIAGNOSIS_VERSION_CODE_20,Diagnosis Version Code 20,0,-1,,prefilter only icd28
+151,DIAGNOSIS_VERSION_CODE_21,Diagnosis Version Code 21,0,-1,,prefilter only icd29
+152,DIAGNOSIS_VERSION_CODE_22,Diagnosis Version Code 22,0,-1,,prefilter only icd30
+153,DIAGNOSIS_VERSION_CODE_23,Diagnosis Version Code 23,0,-1,,prefilter only icd31
+154,DIAGNOSIS_VERSION_CODE_24,Diagnosis Version Code 24,0,-1,,prefilter only icd32
+155,DIAGNOSIS_VERSION_CODE_25,Diagnosis Version Code 25,0,-1,,prefilter only icd33
+156,DIAGNOSIS_CODE_1,Diagnosis Code,0,0,,
+157,DIAGNOSIS_CODE_2,Diagnosis Code 2,0,0,,
+158,DIAGNOSIS_CODE_3,Diagnosis Code 3,0,0,,
+159,DIAGNOSIS_CODE_4,Diagnosis Code 4,0,0,,
+160,DIAGNOSIS_CODE_5,Diagnosis Code 5,0,0,,
+161,DIAGNOSIS_CODE_6,Diagnosis Code 6,0,0,,
+162,DIAGNOSIS_CODE_7,Diagnosis Code 7,0,0,,
+163,DIAGNOSIS_CODE_8,Diagnosis Code 8,0,0,,
+164,DIAGNOSIS_CODE_9,Diagnosis Code 9,0,0,,
+165,DIAGNOSIS_CODE_10,Diagnosis Code 10,0,0,,
+166,DIAGNOSIS_CODE_11,Diagnosis Code 11,0,0,,
+167,DIAGNOSIS_CODE_12,Diagnosis Code 12,0,0,,
+168,DIAGNOSIS_CODE_13,Diagnosis Code 13,0,0,,
+169,DIAGNOSIS_CODE_14,Diagnosis Code 14,0,0,,
+170,DIAGNOSIS_CODE_15,Diagnosis Code 15,0,0,,
+171,DIAGNOSIS_CODE_16,Diagnosis Code 16,0,0,,
+172,DIAGNOSIS_CODE_17,Diagnosis Code 17,0,0,,
+173,DIAGNOSIS_CODE_18,Diagnosis Code 18,0,0,,
+174,DIAGNOSIS_CODE_19,Diagnosis Code 19,0,0,,
+175,DIAGNOSIS_CODE_20,Diagnosis Code 20,0,0,,
+176,DIAGNOSIS_CODE_21,Diagnosis Code 21,0,0,,
+177,DIAGNOSIS_CODE_22,Diagnosis Code 22,0,0,,
+178,DIAGNOSIS_CODE_23,Diagnosis Code 23,0,0,,
+179,DIAGNOSIS_CODE_24,Diagnosis Code 24,0,0,,
+180,DIAGNOSIS_CODE_25,Diagnosis Code 25,0,0,,
+181,DIAGNOSIS_E_CODE_COUNT,Diagnosis E Code Count,1,-1,,
+182,DIAGNOSIS_E_VERSION_CODE_1,Diagnosis E Version Code,0,-1,,
+183,DIAGNOSIS_E_VERSION_CODE_2,Diagnosis E Version Code 2,0,-1,,
+184,DIAGNOSIS_E_VERSION_CODE_3,Diagnosis E Version Code 3,0,-1,,
+185,DIAGNOSIS_E_VERSION_CODE_4,Diagnosis E Version Code 4,0,-1,,
+186,DIAGNOSIS_E_VERSION_CODE_5,Diagnosis E Version Code 5,0,-1,,
+187,DIAGNOSIS_E_VERSION_CODE_6,Diagnosis E Version Code 6,0,-1,,
+188,DIAGNOSIS_E_VERSION_CODE_7,Diagnosis E Version Code 7,0,-1,,
+189,DIAGNOSIS_E_VERSION_CODE_8,Diagnosis E Version Code 8,0,-1,,
+190,DIAGNOSIS_E_VERSION_CODE_9,Diagnosis E Version Code 9,0,-1,,
+191,DIAGNOSIS_E_VERSION_CODE_10,Diagnosis E Version Code 10,0,-1,,
+192,DIAGNOSIS_E_VERSION_CODE_11,Diagnosis E Version Code 11,0,-1,,
+193,DIAGNOSIS_E_VERSION_CODE_12,Diagnosis E Version Code 12,0,0,,
+194,DIAGNOSIS_E_CODE_1,Diagnosis E Code,0,0,,
+195,DIAGNOSIS_E_CODE_2,Diagnosis E Code 2,0,0,,
+196,DIAGNOSIS_E_CODE_3,Diagnosis E Code 3,0,0,,
+197,DIAGNOSIS_E_CODE_4,Diagnosis E Code 4,0,0,,
+198,DIAGNOSIS_E_CODE_5,Diagnosis E Code 5,0,0,,
+199,DIAGNOSIS_E_CODE_6,Diagnosis E Code 6,0,0,,
+200,DIAGNOSIS_E_CODE_7,Diagnosis E Code 7,0,0,,
+201,DIAGNOSIS_E_CODE_8,Diagnosis E Code 8,0,0,,
+202,DIAGNOSIS_E_CODE_9,Diagnosis E Code 9,0,0,,
+203,DIAGNOSIS_E_CODE_10,Diagnosis E Code 10,0,0,,
+204,DIAGNOSIS_E_CODE_11,Diagnosis E Code 11,0,0,,
+205,DIAGNOSIS_E_CODE_12,Diagnosis E Code 12,0,0,,
+206,SURGERY_INDICATOR,Surgical Procedure Indicator Switch,0,0,,
+207,PROCEDURE_CODE_COUNT,Surgical Procedure Code Count,1,-1,,
+208,PROCEDURE_DAYS,Surgical Procedure Performed Day Count,1,-1,,
+209,PROCEDURE_VERSION_CODE_1,Surgical Procedure Version Code,0,-1,,
+210,PROCEDURE_VERSION_CODE_2,Surgical Procedure Version Code 2,0,-1,,
+211,PROCEDURE_VERSION_CODE_3,Surgical Procedure Version Code 3,0,-1,,
+212,PROCEDURE_VERSION_CODE_4,Surgical Procedure Version Code 4,0,-1,,
+213,PROCEDURE_VERSION_CODE_5,Surgical Procedure Version Code 5,0,-1,,
+214,PROCEDURE_VERSION_CODE_6,Surgical Procedure Version Code 6,0,-1,,
+215,PROCEDURE_VERSION_CODE_7,Surgical Procedure Version Code 7,0,-1,,
+216,PROCEDURE_VERSION_CODE_8,Surgical Procedure Version Code 8,0,-1,,
+217,PROCEDURE_VERSION_CODE_9,Surgical Procedure Version Code 9,0,-1,,
+218,PROCEDURE_VERSION_CODE_10,Surgical Procedure Version Code 10,0,-1,,
+219,PROCEDURE_VERSION_CODE_11,Surgical Procedure Version Code 11,0,-1,,
+220,PROCEDURE_VERSION_CODE_12,Surgical Procedure Version Code 12,0,-1,,
+221,PROCEDURE_VERSION_CODE_13,Surgical Procedure Version Code 13,0,-1,,
+222,PROCEDURE_VERSION_CODE_14,Surgical Procedure Version Code 14,0,-1,,
+223,PROCEDURE_VERSION_CODE_15,Surgical Procedure Version Code 15,0,-1,,
+224,PROCEDURE_VERSION_CODE_16,Surgical Procedure Version Code 16,0,-1,,
+225,PROCEDURE_VERSION_CODE_17,Surgical Procedure Version Code 17,0,-1,,
+226,PROCEDURE_VERSION_CODE_18,Surgical Procedure Version Code 18,0,-1,,
+227,PROCEDURE_VERSION_CODE_19,Surgical Procedure Version Code 19,0,-1,,
+228,PROCEDURE_VERSION_CODE_20,Surgical Procedure Version Code 20,0,-1,,
+229,PROCEDURE_VERSION_CODE_21,Surgical Procedure Version Code 21,0,-1,,
+230,PROCEDURE_VERSION_CODE_22,Surgical Procedure Version Code 22,0,-1,,
+231,PROCEDURE_VERSION_CODE_23,Surgical Procedure Version Code 23,0,-1,,
+232,PROCEDURE_VERSION_CODE_24,Surgical Procedure Version Code 24,0,-1,,
+233,PROCEDURE_VERSION_CODE_25,Surgical Procedure Version Code 25,0,-1,,
+234,PROCEDURE_CODE_1,Surgical Procedure Code,0,0,,
+235,PROCEDURE_CODE_2,Surgical Procedure Code 2,0,0,,
+236,PROCEDURE_CODE_3,Surgical Procedure Code 3,0,0,,
+237,PROCEDURE_CODE_4,Surgical Procedure Code 4,0,0,,
+238,PROCEDURE_CODE_5,Surgical Procedure Code 5,0,0,,
+239,PROCEDURE_CODE_6,Surgical Procedure Code 6,0,0,,
+240,PROCEDURE_CODE_7,Surgical Procedure Code 7,0,0,,
+241,PROCEDURE_CODE_8,Surgical Procedure Code 8,0,0,,
+242,PROCEDURE_CODE_9,Surgical Procedure Code 9,0,0,,
+243,PROCEDURE_CODE_10,Surgical Procedure Code 10,0,0,,
+244,PROCEDURE_CODE_11,Surgical Procedure Code 11,0,0,,
+245,PROCEDURE_CODE_12,Surgical Procedure Code 12,0,0,,
+246,PROCEDURE_CODE_13,Surgical Procedure Code 13,0,0,,
+247,PROCEDURE_CODE_14,Surgical Procedure Code 14,0,0,,
+248,PROCEDURE_CODE_15,Surgical Procedure Code 15,0,0,,
+249,PROCEDURE_CODE_16,Surgical Procedure Code 16,0,0,,
+250,PROCEDURE_CODE_17,Surgical Procedure Code 17,0,0,,
+251,PROCEDURE_CODE_18,Surgical Procedure Code 18,0,0,,
+252,PROCEDURE_CODE_19,Surgical Procedure Code 19,0,0,,
+253,PROCEDURE_CODE_20,Surgical Procedure Code 20,0,0,,
+254,PROCEDURE_CODE_21,Surgical Procedure Code 21,0,0,,
+255,PROCEDURE_CODE_22,Surgical Procedure Code 22,0,0,,
+256,PROCEDURE_CODE_23,Surgical Procedure Code 23,0,0,,
+257,PROCEDURE_CODE_24,Surgical Procedure Code 24,0,0,,
+258,PROCEDURE_CODE_25,Surgical Procedure Code 25,0,0,,
+259,BLOOD_FURNISHED,Blood Pints Furnished Quantity,1,-1,,
+260,DRG_CODE,DRG Code,0,0,,"careful, may need to ignore "
+261,DISCHARGE_DESTINATION,Discharge Destination Code,0,0,,
+262,OUTLIER_CODE_DRG_SOURCE,DRG/Outlier Stay Code,0,-1,,same value for all
+263,PRIMARY_PAYER_CODE,Beneficiary Primary Payer Code,0,-1,,99% missing
+264,MEDPAR_ESRD_CONDITION,ESRD Condition Code,0,-1,,99% same value
+265,SOURCE_OF_ADMISSION,Source Inpatient Admission Code,0,0,,
+266,TYPE_OF_ADMISSION,Inpatient Admission Type Code,0,0,,
+267,INTERMEDIARY_NUMBER,Fiscal Intermediary/Carrier Identificati,0,0,,
+268,ADMITTING_DIAGNOSIS_VERSION,Admitting Diagnosis Version Code,0,-1,,
+269,ADMITTING_DIAGNOSIS_CODE,Admitting Diagnosis Code,0,0,,
+270,ADMISSION_TO_DEATH_INTERVAL,Admission Death Day Count,1,-1,,can check if it is predictable
+271,CARE_IMPRVMT_MODEL_1,Care Improvement Model 1 Code,0,-1,,
+272,CARE_IMPRVMT_MODEL_2,Care Improvement Model 2 Code,0,-1,,
+273,CARE_IMPRVMT_MODEL_3,Care Improvement Model 3 Code,0,-1,,
+274,CARE_IMPRVMT_MODEL_4,Care Improvement Model 4 Code,0,-1,,
+275,VBP_PRTCPNT_IND,VBP Participant Indicator Code,0,-1,,
+276,HRR_PRTCPNT_IND,HRR Participant Indicator Code,0,-1,,
+277,BUNDLED_MODEL_DSCNT_PCT,Bundled Model Discount Percent,0,-1,,
+278,VBP_ADJ_PCT,VBP Adjustment Percent,0,-1,,
+279,HRR_ADJ_PCT,HRR Adjustment Percent,0,-1,,
+280,INFRMTL_ENCTR_IND,Informational Encounter Indicator Switch,0,0,,
+281,MA_TEACHING_IND,MA Teaching Indicator Switch,0,-1,,
+282,PROD_RPLCMT_LIFECYC_IND,Product Replacement within Product Lifec,0,-1,,
+283,PROD_RPLCMT_RECALL_IND,Product Replacement for known Recall of,0,-1,,
+284,CRED_RCVD_RPLCD_DVC_IND,Credit Received from Manufacturer for Re,0,-1,,all zero
+285,OBSRVTN_IND,Observation Switch,0,-1,,
+286,NEW_TECH_ADD_AMT,New Technology Add On Amount,1,-1,,
+287,BASE_OPERATING_DRG_AMT,Base Operating DRG Amount,1,-1,,
+288,OPERATING_HSP_AMT,Operating HSP Amount,1,-1,,
+289,MED_SURG_GEN_AMT,Medical/Surgical General Amount,1,-1,,
+290,MED_SURG_NONSTERILE_AMT,Medical/Surgical Non-Sterile Supplies Am,1,-1,,
+291,MED_SURG_STERILE_AMT,Medical/Surgical Sterile Supplies Amount,1,-1,,
+292,MED_SURG_TAKE_HOME_AMT,Medical/Surgical Take Home Amount,1,-1,,
+293,MED_SURG_PROSTHETIC_ORTH_AMT,Medical/Surgical Prosthetic/Orthotic Dev,1,-1,,
+294,MED_SURG_PACEMAKER_AMT,Medical/Surgical Pacemaker Amount,1,-1,,
+295,MED_SURG_INTRA_LENS_AMT,Medical/Surgical Intraocular Lens Amount,1,-1,,
+296,MED_SURG_OXY_TAKE_HOME_AMT,Medical/Surgical Oxygen Take Home Amount,1,-1,,
+297,MED_SURG_OTH_IMPLANTS_AMT,Medical/Surgical Other Implants Amount,1,-1,,
+298,MED_SURG_OTH_SUPP_AMT,Medical/Surgical Other Supplies/Devices,1,-1,,
+299,MED_SURG_RADIOLOGY_SUPP_AMT,Medical/Surgical Supplies Incident to Ra,1,-1,,
+300,MED_SURG_OTH_DIAG_SUPP_AMT,Medical/Surgical Supplies Incident to Ot,1,-1,,
+301,MED_SURG_DRESSINGS_AMT,Medical/Surgical Dressings Amount,1,-1,,
+302,MED_SURG_INVSTGTNL_DVC_AMT,Medical/Surgical Investigational Device,1,-1,,
+303,MED_SURG_MISC_AMT,Medical/Surgical Miscellaneous Amount,1,-1,,
+304,RADIOLOGY_ONCOLOGY_AMT,Radiology Oncology Amount,1,-1,,
+305,RADIOLOGY_DIAGNOSTIC_AMT,Radiology Diagnostic Amount,1,-1,,
+306,RADIOLOGY_THERAPEUTIC_AMT,Radiology Therapeutic Amount,1,-1,,
+307,RADIOLOGY_NUCLEAR_MED_AMT,Radiology Nuclear Medicine Amount,1,-1,,
+308,RADIOLOGY_CT_AMT,Radiology Computed Tomographic (CT) Amou,1,-1,,
+309,RADIOLOGY_OTH_IMAGING_AMT,Radiology Other Imaging Services Amount,1,-1,,
+310,OPERATING_ROOM_AMT,Operating Room Amount,1,-1,,
+311,OPERATING_ROOM_LABOR_DLVRY_AMT,Operating Room Labor and Delivery Amount,1,-1,,
+312,CARDIAC_CATH_AMT,Cardiac Catheterization Amount,1,-1,,
+313,SEQUESTRATION_REDUCTION_AMT,Sequestration Reduction Amount,1,-1,,
+314,UNCOMPENSATED_CARE_PMT_AMT,Uncompensated Care Amount,1,-1,,
+315,BUNDLED_ADJUSTMENT_AMT,Bundled Adjustment Amount,1,-1,,
+316,VBP_ADJ_AMT,VBP Adjustment Amount,1,-1,,
+317,HRR_ADJ_AMT,HRR Adjustment Amount,1,-1,,
+318,EHR_PMT_ADJ_AMT,EHR Payment Adjustment Amount,1,-1,,
+319,PPS_STANDARD_VALUE_PMT_AMT,PPS Standard Value Payment Amount,1,-1,,
+320,FINAL_STANDARD_AMT,Final Standard Amount,1,-1,,
+321,HAC_RDCTN_PMT_AMT,HAC Reduction Payment Amount,1,-1,,
+322,IPPS_FLEX_PMT_7_AMT,IPPS Flex Payment 7 Amount,1,-1,,
+323,PATIENT_ADD_PMT_AMT,Patient Add-On Payment Amount,1,-1,,
+324,HAC_PGM_REDUCTION_IND,HAC Program Reduction Indicator Switch,1,-1,,
+325,EHR_PGM_REDUCTION_IND,EHR Program Reduction Indicator Switch,1,-1,,
+326,PRIOR_AUTH_IND_CODE,Prior Authorization Indicator Code,0,-1,,
+327,UNIQUE_TRACKING_NUMBER,Unique Tracking Number,0,-1,,
+328,MIDNIGHT_STAY_IND,Midnight Stay Indicator Switch,0,-1,,
+329,SITE_NTRL_PYMT_CST_AMT,Site Neutral Payment Based on Cost Amoun,0,-1,,
+330,SITE_NTRL_PYMT_IPPS_AMT,Site Neutral Payment Based on IPPS Amoun,0,-1,,
+331,FULL_STD_PYMT_AMT,Full Standard Payment Amount,0,-1,,
+332,SS_OUTLIER_STD_PYMT_AMT,Short Stay Outlier (SSO) Payment Amount,0,-1,,
+333,NEXT_GNRTN_ACO_IND_1_CD,Next Generation (NG) Accountable Care Or,0,-1,,
+334,NEXT_GNRTN_ACO_IND_2_CD,Next Generation (NG) Accountable Care Or,0,-1,,
+335,NEXT_GNRTN_ACO_IND_3_CD,Next Generation (NG) Accountable Care Or,0,-1,,
+336,NEXT_GNRTN_ACO_IND_4_CD,Next Generation (NG) Accountable Care Or,0,-1,,
+337,NEXT_GNRTN_ACO_IND_5_CD,Next Generation (NG) Accountable Care Or,0,-1,,
+338,RSDL_PYMT_IND_CD,Residual Payment Indicator Code,0,-1,,
+339,CLM_RP_IND_CD,Claim Representative Payee (RP) Indicato,0,-1,,
+340,REV_CNTR_RP_IND_CD,Revenue Center Representative Payee (RP),0,-1,,
+341,ACO_ID_NUM,Accountable Care Organization (ACO) Iden,0,-1,,
+342,ALGNC_STEM_CELL_AMT,Revenue Center Allogeneic Stem Cell Acqu,0,-1,,
+343,ISLET_ADD_ON_PMT_AMT,Islet Add-On Payment Amount,1,-1,,
